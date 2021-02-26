@@ -1,0 +1,11 @@
+{
+  "type": "oracle",
+  "host": "localhost",
+  "port": "1521",
+  "username": "SYSTEM",
+  "sid": "xe",
+  "password": "sipcourse",
+  "logging": false,
+  "entities": ["src/entity/*.ts"],
+  "connectString": "(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(Host = localhost)(Port =1521)))(CONNECT_DATA =(sid =xe)(SERVER=dedicated)))"
+}

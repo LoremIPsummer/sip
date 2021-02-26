@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "concurrently \"cd backend && yarn start\" \"cd frontend && yarn run dev\" ",
+    "client": "cd frontend && yarn run dev",
+    "server": "cd backend && yarn start",
+    "client:install": "cd frontend && yarn install",
+    "server:install": "cd backend && yarn install",
+    "start": "concurrently \"yarn run client\" \"yarn run server\"",
+    "install": "concurrently \"yarn run client:install\" \"yarn run server:install\""
+  },
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
+}
