@@ -1,3 +1,4 @@
+import { Response } from "express";
 import {
   JsonController,
   Get,
@@ -5,6 +6,7 @@ import {
   Delete,
   Body,
   Post,
+  Res,
 } from "routing-controllers";
 import { Service } from "typedi";
 import { Connection, Repository, getConnection } from "typeorm";
@@ -27,33 +29,51 @@ export class InstructorController {
   }
 
   @Get("/instructors/:id")
-  async one(@Param("id") id: string): Promise<Instructor | undefined> {
+  async one(
+    @Param("id") id: string,
+    @Res() response: Response
+  ): Promise<Instructor | Response> {
     try {
       return await this._repo.findOne(id);
     } catch {
-      return undefined;
+      return response
+        .status(404)
+        .json({ err: "There is no instructor with the given ID." });
     }
   }
 
   @Post("/instructors")
-  async post(@Body() instructor: Instructor): Promise<Instructor | undefined> {
+  async post(
+    @Body() instructor: Instructor,
+    @Res() response: Response
+  ): Promise<Instructor | Response> {
     try {
       const created = await this._repo.create(instructor);
-      return created;
+      return response.status(201).json(created);
     } catch {
-      return undefined;
+      return response
+        .status(400)
+        .json({ err: "The given instructor cannot be created." });
     }
   }
 
   @Delete("/instructors/:id")
-  async delete(@Param("id") id: string): Promise<Instructor | undefined> {
+  async delete(
+    @Param("id") id: string,
+    @Res() response: Response
+  ): Promise<Instructor | Response> {
     try {
       const candidate = await this._repo.findOne(id);
-      if (!candidate) return undefined;
+      if (!candidate)
+        return response
+          .status(404)
+          .json({ err: "There is no instructor with the given ID." });
       await this._repo.delete(candidate);
       return candidate;
     } catch {
-      return undefined;
+      return response
+        .status(400)
+        .json({ err: "The given instructor cannot be deleted." });
     }
   }
 }

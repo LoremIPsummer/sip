@@ -2,7 +2,7 @@
   "type": "oracle",
   "host": "localhost",
   "port": "1521",
-  "username": "SYSTEM",
+  "username": "sipcourse",
   "sid": "xe",
   "password": "sipcourse",
   "logging": false,
